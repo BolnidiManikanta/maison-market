@@ -1,0 +1,33 @@
+'use client'
+
+import Link from 'next/link'
+import { useMemo, useState } from 'react'
+import { Heart, Plus, Minus, SlidersHorizontal, ArrowRight, ShoppingBag } from 'lucide-react'
+import { products, searchProducts } from '@/data/products'
+import { useCommerce } from '@/components/commerce-provider'
+
+const money = (n:number) => `₹${n.toLocaleString('en-IN')}`
+export default function CatalogPage({section='shop'}:{section?:string}) {
+  const group = section === 'shop' ? undefined : section === 'budgets' ? 'home-needs' : section === 'automobile' ? 'home-needs' : section === 'toys' ? 'tribe' : section
+  const [query,setQuery] = useState('')
+  const [sort,setSort] = useState('relevance')
+  const [bogoOnly,setBogoOnly] = useState(section !== 'shop')
+  const {cart, wishlist, addToCart, changeQuantity, toggleWishlist, cartCount} = useCommerce()
+  const pool = useMemo(() => {
+    let list = group ? products.filter(p => p.categoryId === group) : products
+    if (query) list = list.filter(p => searchProducts(query).some(x => x.id === p.id))
+    if (bogoOnly) list = list.filter(p => p.isBOGO)
+    return [...list].sort((a,b) => sort==='price-low'?a.price-b.price:sort==='price-high'?b.price-a.price:sort==='rating'?b.rating-a.rating:sort==='discount'?((b.mrp-b.price)/b.mrp)-((a.mrp-a.price)/a.mrp):0)
+  },[group,query,sort,bogoOnly])
+  const title = section==='shop'?'Shop all products':`BOGO ${section[0]?.toUpperCase()}${section.slice(1)}`
+  const qtyFor=(id:string)=>cart.find(line=>line.product.id===id)?.quantity||0
+  return <main className="catalog-page"><div className="catalog-shell">
+    <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>{title}</span></div>
+    <div className="catalog-heading"><div><p className="eyebrow">MAISONMARKET · {group?'COMMUNITY OFFER':'EVERYDAY SHOPPING'}</p><h1>{title}</h1><p>{group?'Buy together, receive more. Every eligible product shows its paid quantity, free quantity and savings before checkout.':'Groceries, useful technology, home essentials, lifestyle and more — organised for quick discovery.'}</p></div><Link href="/cart" className="button primary"><ShoppingBag size={16}/> Cart {cartCount ? `· ${cartCount}` : ''}</Link></div>
+    <div className="catalog-toolbar"><label className="catalog-search">Search this collection<input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Try speaker, apple, puja..." /></label><label className="select-label"><SlidersHorizontal size={16}/> Sort<select value={sort} onChange={e=>setSort(e.target.value)}><option value="relevance">Relevance</option><option value="price-low">Price low to high</option><option value="price-high">Price high to low</option><option value="rating">Top rated</option><option value="discount">Biggest discount</option></select></label><button className={`filter-chip ${bogoOnly?'selected':''}`} onClick={()=>setBogoOnly(v=>!v)}>BOGO only</button></div>
+    <div className="catalog-meta"><b>{pool.length} products</b><span>{query?`Matching “${query}”`:'Curated for your neighbourhood'}</span></div>
+    {pool.length ? <div className="catalog-grid">{pool.map(p=>{const qty=qtyFor(p.id); return <article className="catalog-card" key={p.id}><div className="catalog-image"><img src={p.image} alt={p.name}/>{p.isBOGO&&<span className="bogo-badge">BUY 1 GET 1</span>}<button className={`wish ${wishlist.includes(p.id)?'active':''}`} aria-label="Toggle wishlist" onClick={()=>toggleWishlist(p.id)}><Heart size={17} fill={wishlist.includes(p.id)?'currentColor':'none'}/></button></div><div className="catalog-card-body"><small>{p.brand} · {p.unit}</small><Link href={`/products/${p.slug}`} className="catalog-name">{p.name}</Link><div className="rating">★ {p.rating} <span>({p.reviewCount})</span></div><div className="catalog-price"><b>{money(p.price)}</b><del>{money(p.mrp)}</del><em>{Math.round((1-p.price/p.mrp)*100)}% off</em></div>{p.isBOGO&&<div className="bogo-detail"><b>Pay {money(p.price)}</b><span>Receive {p.isBOGO?2:1} units · Save {money(p.price)}</span></div>}<small className="delivery-text">Delivery {p.deliveryTime}</small>{qty ? <div className="stepper"><button aria-label="Decrease quantity" onClick={()=>changeQuantity(p.id,-1)}><Minus size={15}/></button><b>{qty}</b><button aria-label="Increase quantity" onClick={()=>changeQuantity(p.id,1)}><Plus size={15}/></button></div> : <button className="add-button" onClick={()=>addToCart(p)}>ADD <Plus size={15}/></button>}</div></article>})}</div> : <div className="empty-state"><h2>No products found</h2><p>Try a broader search or explore the full shop.</p><button className="button secondary" onClick={()=>{setQuery('');setBogoOnly(false)}}>Clear filters <ArrowRight size={15}/></button></div>}
+  </div></main>
+}
+
+export function CartPreview(){return null}
