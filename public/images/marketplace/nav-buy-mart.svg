@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Filter for soft realistic drop shadows -->
+    <filter id="shadow-soft" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#113e31" flood-opacity="0.18"/>
+    </filter>
+    <filter id="shadow-item" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+    
+    <!-- Gradients -->
+    <linearGradient id="basketGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b5e48"/>
+      <stop offset="50%" stop-color="#114736"/>
+      <stop offset="100%" stop-color="#0a3326"/>
+    </linearGradient>
+    <linearGradient id="basketRim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#24785d"/>
+      <stop offset="100%" stop-color="#124837"/>
+    </linearGradient>
+    <linearGradient id="baguetteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8a862"/>
+      <stop offset="60%" stop-color="#c97d34"/>
+      <stop offset="100%" stop-color="#9a5217"/>
+    </linearGradient>
+    <linearGradient id="milkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fdfdfd"/>
+      <stop offset="70%" stop-color="#e8eff5"/>
+      <stop offset="100%" stop-color="#cddde8"/>
+    </linearGradient>
+    <linearGradient id="tomatoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b52"/>
+      <stop offset="50%" stop-color="#e52e1b"/>
+      <stop offset="100%" stop-color="#a81507"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffa63d"/>
+      <stop offset="100%" stop-color="#e66d00"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#69c95d"/>
+      <stop offset="100%" stop-color="#2f8524"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="102" cy="162" rx="72" ry="12" fill="#113e31" opacity="0.14" />
+
+  <!-- Baguette sticking out -->
+  <g transform="rotate(22 145 60)" filter="url(#shadow-item)">
+    <rect x="135" y="10" width="22" height="85" rx="11" fill="url(#baguetteGrad)"/>
+    <!-- Baguette cuts -->
+    <path d="M139 30 Q146 32 153 30" stroke="#7a3f12" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M139 48 Q146 50 153 48" stroke="#7a3f12" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M139 66 Q146 68 153 66" stroke="#7a3f12" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Milk Bottle -->
+  <g transform="rotate(-6 95 65)" filter="url(#shadow-item)">
+    <!-- Bottle Cap -->
+    <rect x="88" y="32" width="16" height="8" rx="2" fill="#2979ff"/>
+    <rect x="91" y="40" width="10" height="6" fill="#cddde8"/>
+    <!-- Bottle Body -->
+    <path d="M85 54 L91 46 L101 46 L107 54 C110 58 110 65 110 90 L82 90 C82 65 82 58 85 54 Z" fill="url(#milkGrad)"/>
+    <!-- Label -->
+    <rect x="83" y="65" width="26" height="18" rx="2" fill="#2979ff" opacity="0.85"/>
+    <rect x="86" y="70" width="20" height="2" rx="1" fill="#fff"/>
+    <rect x="88" y="75" width="16" height="2" rx="1" fill="#fff" opacity="0.7"/>
+  </g>
+
+  <!-- Fresh Green Leaves -->
+  <g filter="url(#shadow-item)">
+    <path d="M50 78 C52 50 72 45 76 65 C82 45 100 52 98 75 Z" fill="url(#leafGrad)"/>
+    <path d="M62 60 Q66 70 70 80" stroke="#1b5e20" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M85 58 Q82 68 80 78" stroke="#1b5e20" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Orange / Tomato Produce in basket -->
+  <circle cx="68" cy="85" r="15" fill="url(#orangeGrad)" filter="url(#shadow-item)"/>
+  <circle cx="120" cy="88" r="14" fill="url(#tomatoGrad)" filter="url(#shadow-item)"/>
+  <!-- Tomato stem -->
+  <path d="M120 74 L119 71 M117 74 L120 72 L123 74" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Shopping Basket (Perspective / 3D Grid) -->
+  <g filter="url(#shadow-soft)">
+    <!-- Main Basket Body -->
+    <path d="M42 90 L162 90 L148 152 C147 156 143 158 139 158 L65 158 C61 158 57 156 56 152 L42 90 Z" fill="url(#basketGrad)"/>
+    
+    <!-- Top Rim -->
+    <rect x="36" y="86" width="132" height="10" rx="4" fill="url(#basketRim)"/>
+    <!-- Rim Highlight -->
+    <line x1="40" y1="88" x2="164" y2="88" stroke="#48a688" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- Basket Handles -->
+    <path d="M55 86 C55 48 85 46 102 46 C119 46 149 48 149 86" stroke="#0a3326" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <path d="M57 86 C57 50 86 48 102 48 C118 48 147 50 147 86" stroke="#258266" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- Basket Grid Slots (Horizontal & Vertical Openings) -->
+    <!-- Row 1 -->
+    <g fill="#08241b" opacity="0.75">
+      <rect x="52" y="104" width="12" height="10" rx="1.5"/>
+      <rect x="70" y="104" width="15" height="10" rx="1.5"/>
+      <rect x="91" y="104" width="18" height="10" rx="1.5"/>
+      <rect x="115" y="104" width="15" height="10" rx="1.5"/>
+      <rect x="136" y="104" width="12" height="10" rx="1.5"/>
+
+      <!-- Row 2 -->
+      <rect x="56" y="120" width="11" height="10" rx="1.5"/>
+      <rect x="73" y="120" width="14" height="10" rx="1.5"/>
+      <rect x="93" y="120" width="16" height="10" rx="1.5"/>
+      <rect x="115" y="120" width="14" height="10" rx="1.5"/>
+      <rect x="135" y="120" width="11" height="10" rx="1.5"/>
+
+      <!-- Row 3 -->
+      <rect x="61" y="136" width="10" height="9" rx="1.5"/>
+      <rect x="77" y="136" width="13" height="9" rx="1.5"/>
+      <rect x="95" y="136" width="14" height="9" rx="1.5"/>
+      <rect x="115" y="136" width="13" height="9" rx="1.5"/>
+      <rect x="133" y="136" width="10" height="9" rx="1.5"/>
+    </g>
+
+    <!-- Side Handles -->
+    <rect x="34" y="98" width="6" height="14" rx="2" fill="#0f3b2d"/>
+    <rect x="164" y="98" width="6" height="14" rx="2" fill="#0f3b2d"/>
+  </g>
+</svg>

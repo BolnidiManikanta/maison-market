@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" width="100%" height="100%" fill="none">
+  <defs>
+    <filter id="comm-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#4a1575" flood-opacity="0.2"/>
+    </filter>
+    <filter id="bubble-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#4a1575" flood-opacity="0.22"/>
+    </filter>
+
+    <!-- 3D Avatar Gradients -->
+    <linearGradient id="purpleHeadMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ab7ae2"/>
+      <stop offset="40%" stop-color="#8c4bc9"/>
+      <stop offset="100%" stop-color="#5f1d99"/>
+    </linearGradient>
+    <linearGradient id="purpleBodyMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9d62d9"/>
+      <stop offset="60%" stop-color="#7935b8"/>
+      <stop offset="100%" stop-color="#4c147d"/>
+    </linearGradient>
+
+    <!-- Side Avatars (Lighter / Soft Depth) -->
+    <linearGradient id="purpleHeadSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c49eef"/>
+      <stop offset="50%" stop-color="#a871de"/>
+      <stop offset="100%" stop-color="#7a36be"/>
+    </linearGradient>
+    <linearGradient id="purpleBodySide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b688e8"/>
+      <stop offset="60%" stop-color="#9355cc"/>
+      <stop offset="100%" stop-color="#64249e"/>
+    </linearGradient>
+
+    <!-- Chat Bubble Gradient -->
+    <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b57fed"/>
+      <stop offset="100%" stop-color="#7c32bf"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="102" cy="162" rx="76" ry="12" fill="#4a1575" opacity="0.14" />
+
+  <!-- Chat Speech Bubble Floating at Top Right -->
+  <g filter="url(#bubble-shadow)">
+    <!-- Bubble Body -->
+    <path d="M125 18 C144 18 160 30 160 46 C160 62 144 74 125 74 C117 74 110 71 104 66 L88 74 L94 60 C90 56 88 51 88 46 C88 30 104 18 125 18 Z" fill="url(#bubbleGrad)"/>
+    <!-- Chat dots -->
+    <circle cx="112" cy="46" r="3.5" fill="#ffffff"/>
+    <circle cx="125" cy="46" r="3.5" fill="#ffffff"/>
+    <circle cx="138" cy="46" r="3.5" fill="#ffffff"/>
+  </g>
+
+  <!-- Avatar Group in 3D Formation -->
+  <g filter="url(#comm-shadow)">
+    <!-- Background Avatar Far Left -->
+    <g>
+      <circle cx="56" cy="88" r="14" fill="url(#purpleHeadSide)"/>
+      <path d="M40 148 C40 114 48 110 56 110 C64 110 72 114 72 148 Z" fill="url(#purpleBodySide)"/>
+    </g>
+
+    <!-- Background Avatar Far Right -->
+    <g>
+      <circle cx="148" cy="88" r="14" fill="url(#purpleHeadSide)"/>
+      <path d="M132 148 C132 114 140 110 148 110 C156 110 164 114 164 148 Z" fill="url(#purpleBodySide)"/>
+    </g>
+
+    <!-- Middle-Left Avatar -->
+    <g>
+      <circle cx="78" cy="80" r="17" fill="url(#purpleHeadSide)"/>
+      <path d="M58 152 C58 110 68 104 78 104 C88 104 98 110 98 152 Z" fill="url(#purpleBodySide)"/>
+    </g>
+
+    <!-- Middle-Right Avatar -->
+    <g>
+      <circle cx="126" cy="80" r="17" fill="url(#purpleHeadSide)"/>
+      <path d="M106 152 C106 110 116 104 126 104 C136 104 146 110 146 152 Z" fill="url(#purpleBodySide)"/>
+    </g>
+
+    <!-- Foreground Central Avatar (Largest / Highlighted) -->
+    <g>
+      <!-- Head -->
+      <circle cx="102" cy="72" r="20" fill="url(#purpleHeadMain)"/>
+      <!-- Soft Head highlight -->
+      <ellipse cx="98" cy="65" rx="7" ry="5" fill="#ffffff" opacity="0.25"/>
+      <!-- Body -->
+      <path d="M78 156 C78 106 90 98 102 98 C114 98 126 106 126 156 Z" fill="url(#purpleBodyMain)"/>
+      <!-- Shoulder highlights -->
+      <path d="M84 144 C84 115 92 108 102 108 C112 108 120 115 120 144" stroke="#ffffff" stroke-width="2" opacity="0.2" fill="none"/>
+    </g>
+  </g>
+</svg>

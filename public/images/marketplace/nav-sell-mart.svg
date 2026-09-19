@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" width="100%" height="100%" fill="none">
+  <defs>
+    <filter id="box-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#8a4312" flood-opacity="0.18"/>
+    </filter>
+    <filter id="item-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Cardboard Box Gradients -->
+    <linearGradient id="boxFront" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dfa56b"/>
+      <stop offset="50%" stop-color="#cc8e52"/>
+      <stop offset="100%" stop-color="#b07338"/>
+    </linearGradient>
+    <linearGradient id="boxFlap" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ebd0b0"/>
+      <stop offset="100%" stop-color="#d39b61"/>
+    </linearGradient>
+    <linearGradient id="boxInside" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#734219"/>
+      <stop offset="100%" stop-color="#542c0c"/>
+    </linearGradient>
+    <linearGradient id="cameraBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3c4146"/>
+      <stop offset="100%" stop-color="#1e2226"/>
+    </linearGradient>
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#556270"/>
+      <stop offset="50%" stop-color="#242b33"/>
+      <stop offset="100%" stop-color="#0b0e12"/>
+    </linearGradient>
+    <linearGradient id="lampGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#808b96"/>
+      <stop offset="100%" stop-color="#4a5568"/>
+    </linearGradient>
+    <linearGradient id="plantPot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e07a5f"/>
+      <stop offset="100%" stop-color="#b84a2d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="100" cy="162" rx="72" ry="12" fill="#8a4312" opacity="0.14" />
+
+  <!-- Items inside Box (Rendered before front box walls) -->
+  
+  <!-- Desk Lamp (Sticking out top right) -->
+  <g filter="url(#item-shadow)">
+    <!-- Lamp Base rod -->
+    <path d="M135 78 L142 48 L152 38" stroke="#4a5568" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="142" cy="48" r="4" fill="#2d3748"/>
+    <!-- Lamp Shade / Head -->
+    <path d="M142 26 L164 34 L156 50 L134 42 Z" fill="url(#lampGrad)"/>
+    <ellipse cx="145" cy="46" rx="5" ry="12" transform="rotate(-22 145 46)" fill="#ffeb3b" opacity="0.85"/>
+  </g>
+
+  <!-- Small Plant (Succulent in pot, left-center) -->
+  <g filter="url(#item-shadow)">
+    <!-- Terracotta pot -->
+    <path d="M68 68 L84 68 L81 84 L71 84 Z" fill="url(#plantPot)"/>
+    <rect x="66" y="65" width="20" height="4" rx="1.5" fill="#f4977e"/>
+    <!-- Leaves -->
+    <ellipse cx="76" cy="58" rx="6" ry="9" fill="#48bb78"/>
+    <ellipse cx="71" cy="62" rx="5" ry="7" transform="rotate(-30 71 62)" fill="#38a169"/>
+    <ellipse cx="81" cy="62" rx="5" ry="7" transform="rotate(30 81 62)" fill="#38a169"/>
+  </g>
+
+  <!-- Vintage / DSLR Camera (Center-right in box) -->
+  <g filter="url(#item-shadow)">
+    <!-- Camera Body -->
+    <rect x="88" y="60" width="46" height="30" rx="4" fill="url(#cameraBody)"/>
+    <rect x="88" y="60" width="46" height="9" rx="2" fill="#a0aec0"/>
+    <rect x="94" y="55" width="14" height="6" rx="1.5" fill="#2d3748"/>
+    <circle cx="124" cy="57" r="3" fill="#e53e3e"/>
+    <!-- Camera Lens -->
+    <circle cx="111" cy="75" r="12" fill="url(#lensGrad)"/>
+    <circle cx="111" cy="75" r="9" fill="#1a202c"/>
+    <circle cx="111" cy="75" r="6" fill="#2b6cb0"/>
+    <circle cx="108" cy="72" r="2" fill="#fff" opacity="0.75"/>
+  </g>
+
+  <!-- Cardboard Box (3D Isometric Open Box) -->
+  <g filter="url(#box-shadow)">
+    <!-- Box Inner Cavity -->
+    <path d="M48 85 L100 98 L152 85 L100 74 Z" fill="url(#boxInside)"/>
+
+    <!-- Left Flap Folded Back -->
+    <path d="M48 85 L28 72 L78 63 L100 74 Z" fill="url(#boxFlap)"/>
+
+    <!-- Right Flap Folded Back -->
+    <path d="M152 85 L172 72 L122 63 L100 74 Z" fill="url(#boxFlap)"/>
+
+    <!-- Box Main Front-Left Wall -->
+    <path d="M48 85 L100 98 L100 152 L48 138 Z" fill="url(#boxFront)"/>
+
+    <!-- Box Main Front-Right Wall -->
+    <path d="M100 98 L152 85 L152 138 L100 152 Z" fill="#b3763d"/>
+
+    <!-- Front Left Flap Hanging Down -->
+    <path d="M48 85 L100 98 L100 114 L48 101 Z" fill="#d99757" opacity="0.9"/>
+    
+    <!-- Front Right Flap Hanging Down -->
+    <path d="M100 98 L152 85 L152 101 L100 114 Z" fill="#c48344" opacity="0.9"/>
+
+    <!-- Packing Tape / Fragile Seal Detail -->
+    <path d="M96 98 L104 98 L104 152 L96 152 Z" fill="#d69e2e" opacity="0.85"/>
+    
+    <!-- Barcode / Box label on side -->
+    <rect x="58" y="112" width="22" height="15" rx="1" fill="#fff" opacity="0.9"/>
+    <line x1="62" y1="117" x2="76" y2="117" stroke="#333" stroke-width="1.5"/>
+    <line x1="62" y1="121" x2="72" y2="121" stroke="#333" stroke-width="1"/>
+  </g>
+</svg>

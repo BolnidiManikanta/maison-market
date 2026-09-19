@@ -1,0 +1,8 @@
+{
+  "name": "MaisonMarket",
+  "description": "A community-commerce marketplace for everyday shopping, transparent BOGO savings, nearby services, resale and refurbished products.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
