@@ -64,7 +64,7 @@ export default function AdminDashboard() {
       <div className="admin-shell">
         <div className="admin-top">
           <div>
-            <p className="eyebrow">MAISONMARKET · OPERATIONS</p>
+            <p className="eyebrow">TECHIESMART · OPERATIONS</p>
             <h1>Admin dashboard</h1>
             <p>
               Demo operations console for catalog, marketplaces, services, and doorstep booking coordination.

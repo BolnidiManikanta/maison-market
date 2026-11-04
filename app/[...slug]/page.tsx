@@ -7,27 +7,20 @@ import AuthDemo from '@/components/auth-demo'
 import ProductActions from '@/components/product-actions'
 import AccountView from '@/components/account-view'
 import { serviceCatalog, getServiceSlug } from '@/data/marketplaces'
+import Footer from '@/components/footer'
 
 export default async function RoutePage({
   params,
-  searchParams,
 }: {
   params: Promise<{ slug: string[] }>
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const { slug } = await params
-  const sp = searchParams ? await searchParams : {}
-  const bookParam =
-    typeof sp.book === 'string'
-      ? sp.book
-      : typeof sp.service === 'string'
-      ? sp.service
-      : undefined
   const path = slug.join('/')
   const product = findProduct(slug.at(-1) || '')
   if (product)
     return (
-      <main className="route-page">
+      <>
+        <main className="route-page">
         <div className="route-inner">
           <Link href="/shop" className="back-link">
             ← Back to shop
@@ -36,7 +29,7 @@ export default async function RoutePage({
             <div className="pdp-media">
               <img src={product.image} alt={product.name} />
               <span className="bogo-badge">
-                {product.isBOGO ? 'BUY 1 GET 1' : 'MAISON SELECT'}
+                {product.isBOGO ? 'BUY 1 GET 1' : 'TECHIESMART SELECT'}
               </span>
             </div>
             <div className="pdp-copy">
@@ -103,7 +96,9 @@ export default async function RoutePage({
           </div>
         </div>
       </main>
-    )
+      <Footer />
+    </>
+  )
   if (path === 'bogo') return <CatalogPage section="smart" />
   if (path.startsWith('bogo/'))
     return <CatalogPage section={path.split('/').at(-1) || 'smart'} />
@@ -140,7 +135,7 @@ export default async function RoutePage({
       />
     )
   if (path === 'serv-mart' || path === 'services')
-    return <MarketplacePage kind="services" initialServiceId={bookParam} />
+    return <MarketplacePage kind="services" />
   if (path.startsWith('serv-mart/book/') || path.startsWith('services/book/')) {
     const serviceId = path.split('/').at(-1) || ''
     return <MarketplacePage kind="services" initialServiceId={serviceId} />
@@ -150,19 +145,18 @@ export default async function RoutePage({
       <MarketplacePage
         kind="services"
         initialCategory={path.split('/').at(-1) || ''}
-        initialServiceId={bookParam}
       />
     )
   if (path==='resellers'||path==='buys'||path==='sale') return <MarketplacePage kind={path}/>
   if (path==='login') return <AuthDemo/>
   if (path==='account') return <AccountView initialTab="bookings"/>
   if (path==='orders') return <AccountView initialTab="orders"/>
-  if (['cart','checkout'].includes(path)) { const title=path==='cart'?'Your cart':'Checkout'; return <main className="route-page"><div className="route-inner"><Link href="/" className="back-link">← Back to home</Link><p className="eyebrow">MAISONMARKET</p><h1>{title}</h1><p className="route-lead">A commerce-first experience for shopping together, discovering useful services and making savings visible.</p><div className="route-list"><article><h2>Explore this workspace</h2><p>{path==='cart'?'Your cart will show exact products, quantities and BOGO savings.':'MaisonMarket connects everyday shopping, community offers and useful neighbourhood services.'}</p><Link href="/shop" className="button primary">{path==='cart'?'Continue shopping':'Browse products'}</Link></article></div></div></main>
+  if (['cart','checkout'].includes(path)) { const title=path==='cart'?'Your cart':'Checkout'; return <><main className="route-page"><div className="route-inner"><Link href="/" className="back-link">← Back to home</Link><p className="eyebrow">TECHIESMART</p><h1>{title}</h1><p className="route-lead">A commerce-first experience for shopping together, discovering useful services and making savings visible.</p><div className="route-list"><article><h2>Explore this workspace</h2><p>{path==='cart'?'Your cart will show exact products, quantities and BOGO savings.':'TechieSmart connects everyday shopping, community offers and useful neighbourhood services.'}</p><Link href="/shop" className="button primary">{path==='cart'?'Continue shopping':'Browse products'}</Link></article></div></div></main><Footer/></>
   }
   notFound()
 }
 
-export const dynamicParams = true
+export const dynamicParams = false
 
 export function generateStaticParams() {
   const routes: { slug: string[] }[] = [
@@ -239,36 +233,36 @@ export async function generateMetadata({
   const product = findProduct(slug.at(-1) || '')
   if (product) {
     return {
-      title: `${product.name} | MaisonMarket`,
+      title: `${product.name} | TechieSmart`,
       description: `${product.description.slice(0, 150)}...`,
     }
   }
   const path = slug.join('/')
   const titles: Record<string, string> = {
-    shop: 'Shop All Products | MaisonMarket',
-    bogo: 'BOGO Buy 1 Get 1 Offers | MaisonMarket',
-    smart: 'Smart Electronics | MaisonMarket',
-    fresh: 'Fresh Essentials & Groceries | MaisonMarket',
-    budgets: 'Budget Furniture & Home | MaisonMarket',
-    automobile: 'Automobile Care & Accessories | MaisonMarket',
-    divine: 'Divine & Puja Essentials | MaisonMarket',
-    toys: 'Kids & Toys | MaisonMarket',
-    tribe: 'Community Tribe & Bulk Buys | MaisonMarket',
-    'buy-mart': 'Buy Mart Community Catalog | MaisonMarket',
-    'sell-mart': 'Sell Mart Peer-to-Peer Marketplace | MaisonMarket',
-    'serv-mart': 'Serv Mart Doorstep Home Services | MaisonMarket',
-    services: 'Neighbourhood Services | MaisonMarket',
-    community: 'Community Hub & Neighbourhoods | MaisonMarket',
-    resellers: 'Verified Reseller Deals | MaisonMarket',
-    buys: 'Bulk Group Buys | MaisonMarket',
-    sale: 'Clearance & Sale Deals | MaisonMarket',
-    account: 'My Account & Bookings | MaisonMarket',
-    orders: 'My Orders | MaisonMarket',
-    cart: 'Shopping Cart | MaisonMarket',
-    checkout: 'Checkout | MaisonMarket',
+    shop: 'Shop All Products | TechieSmart',
+    bogo: 'BOGO Buy 1 Get 1 Offers | TechieSmart',
+    smart: 'Smart Electronics | TechieSmart',
+    fresh: 'Fresh Essentials & Groceries | TechieSmart',
+    budgets: 'Budget Furniture & Home | TechieSmart',
+    automobile: 'Automobile Care & Accessories | TechieSmart',
+    divine: 'Divine & Puja Essentials | TechieSmart',
+    toys: 'Kids & Toys | TechieSmart',
+    tribe: 'Community Tribe & Bulk Buys | TechieSmart',
+    'buy-mart': 'Buy Mart Community Catalog | TechieSmart',
+    'sell-mart': 'Sell Mart Peer-to-Peer Marketplace | TechieSmart',
+    'serv-mart': 'Serv Mart Doorstep Home Services | TechieSmart',
+    services: 'Neighbourhood Services | TechieSmart',
+    community: 'Community Hub & Neighbourhoods | TechieSmart',
+    resellers: 'Verified Reseller Deals | TechieSmart',
+    buys: 'Bulk Group Buys | TechieSmart',
+    sale: 'Clearance & Sale Deals | TechieSmart',
+    account: 'My Account & Bookings | TechieSmart',
+    orders: 'My Orders | TechieSmart',
+    cart: 'Shopping Cart | TechieSmart',
+    checkout: 'Checkout | TechieSmart',
   }
   return {
-    title: titles[path] || 'MaisonMarket | Community commerce and BOGO savings',
-    description: 'Shop products, BOGO offers, fresh essentials and neighbourhood services with MaisonMarket.',
+    title: titles[path] || 'TechieSmart | Community commerce and BOGO savings',
+    description: 'Shop products, BOGO offers, fresh essentials and neighbourhood services with TechieSmart.',
   }
 }

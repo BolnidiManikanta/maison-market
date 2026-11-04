@@ -71,7 +71,7 @@ const servicesResult = inspect(serviceCatalog, 'service')
 const marketplaceListings = [...resellerListings, ...saleProducts, ...buysProducts]
 const marketplaceResult = inspect(marketplaceListings, 'marketplace')
 
-console.log('==================================================\nMAISONMARKET IMAGE AUDIT\n==================================================\n')
+console.log('==================================================\nTECHIESMART IMAGE AUDIT\n==================================================\n')
 console.log('PRODUCTS')
 const print = (r: Result) => {
   console.log(

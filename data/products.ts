@@ -451,7 +451,7 @@ const rawCatalog: Record<string, RawItem[]> = {
   ],
 }
 
-const brandsPool = ['Maison Select', 'DailyKart', 'Namma Farms', 'Urban Utility', 'Aarambh', 'Mitti Collective', 'Everyday Co.']
+const brandsPool = ['TechieSmart Select', 'DailyKart', 'Namma Farms', 'Urban Utility', 'Aarambh', 'Mitti Collective', 'Everyday Co.']
 const categoryTitles: Record<string, string> = {
   fresh: 'Fresh',
   smart: 'Smart',
@@ -479,7 +479,7 @@ export const products: Product[] = Object.entries(rawCatalog).flatMap(([catKey, 
     const reviewCount = 20 + i * 9
     const stock = 12 + (i % 38)
     const deliveryTime = catKey === 'fresh' ? 'Today, 30–60 min' : catKey === 'furniture' ? '2-3 Business Days' : 'Tomorrow, 9am–1pm'
-    const description = item.description || `A carefully selected ${item.name.toLowerCase()} for practical everyday use, with clear pricing and dependable delivery from MaisonMarket.`
+    const description = item.description || `A carefully selected ${item.name.toLowerCase()} for practical everyday use, with clear pricing and dependable delivery from TechieSmart.`
     const image = item.image
 
     return {
@@ -512,12 +512,12 @@ export const products: Product[] = Object.entries(rawCatalog).flatMap(([catKey, 
           ? ['40-point technical inspection', '6 months warranty support', 'Original accessories & cable']
           : catKey === 'bulk-order'
           ? ['Wholesale bulk packaging', 'Transparent tier pricing', 'Direct verified supplier dispatch']
-          : ['Quality tested materials', 'Community verified pricing', 'Standard MaisonMarket assurance'],
+          : ['Quality tested materials', 'Community verified pricing', 'Standard TechieSmart assurance'],
       specs:
         catKey === 'fresh'
           ? { origin: 'India', storage: 'Keep refrigerated', shelfLife: 'As marked on pack' }
           : catKey === 'refurbished'
-          ? { condition: 'Tested & Certified', warranty: '6 Months MaisonMarket Care', packageContents: '1 unit + accessories' }
+          ? { condition: 'Tested & Certified', warranty: '6 Months TechieSmart Care', packageContents: '1 unit + accessories' }
           : { material: 'Quality-tested materials', warranty: catKey === 'smart' ? '1 Year Standard' : 'Standard Policy', packageContents: item.unit },
     }
   })
@@ -552,7 +552,7 @@ export const bogoVerticals = [
 ]
 
 export const faqs = [
-  ['What is BOGO at MaisonMarket?', 'BOGO is a transparent Buy One Get One offer on selected campaigns. You pay for the paid quantity and the matching free quantity is shown separately in your cart.'],
+  ['What is BOGO at TechieSmart?', 'BOGO is a transparent Buy One Get One offer on selected campaigns. You pay for the paid quantity and the matching free quantity is shown separately in your cart.'],
   ['How does community commerce work?', 'Neighbours can discover the same campaign and aggregate interest. Participation can improve procurement planning, but savings and availability are always shown as estimates until confirmed.'],
   ['How quickly will my order arrive?', 'Fresh campaigns show a short delivery window. Other products show the next available slot before checkout, based on the demo location selected.'],
   ['Can I return an item?', 'Return eligibility is shown on each product and order. Fresh goods follow a separate quality issue process, while eligible non-food products have a standard return window.'],
@@ -575,7 +575,7 @@ export const communities = [
 ]
 
 export const resale = ['Refurbished Android Phone', 'Two-door Refrigerator', 'Study Desk with Storage', 'Smart LED Television', 'Front Load Washing Machine', 'Air Conditioner 1.5T', 'Solid Wood Bookshelf', 'Gaming Monitor']
-export const importInfo = ['Choose a product request', 'MaisonMarket aggregates interest', 'Supplier quotations are compared', 'Community reviews MOQ and landed estimates', 'Procurement status is updated before dispatch']
+export const importInfo = ['Choose a product request', 'TechieSmart aggregates interest', 'Supplier quotations are compared', 'Community reviews MOQ and landed estimates', 'Procurement status is updated before dispatch']
 
 export function searchProducts(query: string) {
   const q = query.toLowerCase().trim()

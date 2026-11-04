@@ -86,7 +86,7 @@ export default function CatalogPage({
         <div className="catalog-heading">
           <div>
             <p className="eyebrow">
-              MAISONMARKET · {isBogoOnlyDefault ? 'COMMUNITY BOGO OFFER' : 'BUY MART INVENTORY'}
+              TECHIESMART · {isBogoOnlyDefault ? 'COMMUNITY BOGO OFFER' : 'BUY MART INVENTORY'}
             </p>
             <h1>{title}</h1>
             <p>

@@ -99,7 +99,7 @@ export default function AccountView({ initialTab = 'bookings' }: { initialTab?: 
         <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-widest text-[#c89c47]">
-              MAISONMARKET · ACCOUNT & PARTICIPATION
+              TECHIESMART · ACCOUNT & PARTICIPATION
             </p>
             <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#173b32] mt-1">
               Your Account

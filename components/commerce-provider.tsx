@@ -6,7 +6,7 @@ import type { Product } from '@/data/products'
 type CartLine={product:Product;quantity:number}
 type CommerceContextValue={cart:CartLine[];wishlist:string[];location:string;addToCart:(product:Product,quantity?:number)=>void;changeQuantity:(id:string,delta:number)=>void;toggleWishlist:(id:string)=>void;setLocation:(location:string)=>void;cartCount:number;subtotal:number}
 const CommerceContext=createContext<CommerceContextValue|null>(null)
-const STORAGE_KEY='maisonmarket-commerce'
+const STORAGE_KEY='techiesmart-commerce'
 
 export function CommerceProvider({children}:{children:React.ReactNode}){
   const [cart,setCart]=useState<CartLine[]>([])

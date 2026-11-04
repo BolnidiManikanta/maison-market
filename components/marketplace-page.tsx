@@ -136,7 +136,7 @@ export default function MarketplacePage({
       <div className="marketplace-shell">
         <div className="marketplace-head">
           <div>
-            <p className="eyebrow">MAISONMARKET</p>
+            <p className="eyebrow">TECHIESMART</p>
             <h1>{title}</h1>
             <p>
               Pre-owned, certified refurbished, and clear seasonal offers from verified
@@ -1197,7 +1197,7 @@ function CommunityHub() {
 
         <div className="marketplace-head mt-8">
           <div>
-            <p className="eyebrow">MAISONMARKET · COMMUNITIES</p>
+            <p className="eyebrow">TECHIESMART · COMMUNITIES</p>
             <h1>Community commerce, locally coordinated.</h1>
             <p>
               Connect residents, services, safety, household support, and shared
@@ -1351,7 +1351,7 @@ function ListingForm({ setNotice }: { setNotice: (v: string) => void }) {
 
   return (
     <section className="listing-panel">
-      <p className="eyebrow">SELL WITH MAISONMARKET</p>
+      <p className="eyebrow">SELL WITH TECHIESMART</p>
       <h2>Create a verified local listing</h2>
       <p>
         Describe the item, set a fair price, select your neighbourhood, and receive

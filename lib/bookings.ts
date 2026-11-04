@@ -42,8 +42,8 @@ export interface ServiceBooking {
   notes?: string
 }
 
-const STORAGE_KEY = 'maisonmarket_service_bookings'
-const EVENT_NAME = 'maisonmarket:bookings-updated'
+const STORAGE_KEY = 'techiesmart_service_bookings'
+const EVENT_NAME = 'techiesmart:bookings-updated'
 
 export const DEFAULT_BOOKINGS: ServiceBooking[] = [
   {
