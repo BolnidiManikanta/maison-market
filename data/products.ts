@@ -525,7 +525,14 @@ export const products: Product[] = Object.entries(rawCatalog).flatMap(([catKey, 
 
 export const featuredProducts = products.filter((p) => p.isBOGO).slice(0, 12)
 export function findProduct(slug: string) {
-  return products.find((p) => p.slug === slug)
+  const s = slug.toLowerCase()
+  return products.find(
+    (p) =>
+      p.slug === slug ||
+      p.id === slug ||
+      p.slug.toLowerCase() === s ||
+      p.id.toLowerCase() === s
+  )
 }
 export const productStats = {
   total: products.length,
