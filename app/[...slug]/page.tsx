@@ -117,15 +117,12 @@ export default async function RoutePage({
     ].includes(path)
   )
     return <CatalogPage section={path} />
-  if (path === 'categories') return <MarketplacePage kind="categories" />
-  if (path.startsWith('categories/')) {
+  if (path === 'categories' || path === 'buy-mart') return <MarketplacePage kind="categories" />
+  if (path.startsWith('categories/') || path.startsWith('buy-mart/')) {
     const category = path.split('/').at(-1) || 'fresh'
     return <CatalogPage section={category} />
   }
   if (path === 'community') return <MarketplacePage kind="community" />
-  if (path === 'buy-mart') return <CatalogPage section="shop" />
-  if (path.startsWith('buy-mart/'))
-    return <CatalogPage section={path.split('/').at(-1) || 'fresh'} />
   if (path === 'sell-mart') return <MarketplacePage kind="sell" />
   if (path.startsWith('sell-mart/'))
     return (

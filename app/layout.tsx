@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { CommerceProvider } from '@/components/commerce-provider'
+import SiteHeader from '@/components/site-header'
 export const metadata: Metadata = {
   title: 'TechieSmart — Shop together. Save together.',
   description:
@@ -8,4 +9,4 @@ export const metadata: Metadata = {
   generator: 'TechieSmart',
 }
 export const viewport: Viewport={colorScheme:'light',themeColor:'#f6f5f0'}
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en" className="bg-background"><body className="antialiased"><CommerceProvider>{children}</CommerceProvider></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en" className="bg-background"><body className="antialiased"><CommerceProvider><SiteHeader/>{children}</CommerceProvider></body></html>}
