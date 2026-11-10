@@ -3,7 +3,16 @@ const fs = require('fs')
 const path = require('path')
 
 const PORT = parseInt(process.env.PORT || '3000', 10)
-const HOST = '0.0.0.0'
+const HOST = process.env.HOSTNAME || '0.0.0.0'
+process.env.PORT = String(PORT)
+process.env.HOSTNAME = HOST
+
+const STANDALONE_SERVER = path.join(__dirname, '.next', 'standalone', 'server.js')
+if (fs.existsSync(STANDALONE_SERVER)) {
+  console.log(`Starting Next.js standalone server on http://${HOST}:${PORT}`)
+  require(STANDALONE_SERVER)
+  return
+}
 
 const OUT_DIR = path.join(__dirname, 'out')
 const DIST_DIR = path.join(__dirname, 'dist')

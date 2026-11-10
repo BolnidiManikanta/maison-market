@@ -9,7 +9,6 @@ import {
   Store,
   Wrench,
   Users,
-  Sparkles,
   MapPin,
   Search,
   UserRound,
@@ -25,7 +24,7 @@ import { useCommerce } from '@/components/commerce-provider'
 export default function SiteHeader() {
   const pathname = usePathname()
   const router = useRouter()
-  const { cartCount, wishlist } = useCommerce()
+  const { cartCount, wishlist, user } = useCommerce()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -109,12 +108,13 @@ export default function SiteHeader() {
 
           {/* Header Action Icons */}
           <nav className="header-actions">
-            <Link href="/account" aria-label="Account" className="account-link">
+            <Link href={user ? '/account' : '/login'} aria-label="Account" className="account-link">
               <UserRound size={20} />
               <small>Account</small>
             </Link>
-            <Link href="/account" aria-label="Wishlist" className="account-link">
+            <Link href="/wishlist" aria-label="Wishlist" className="cart-link">
               <Heart size={20} fill={wishlist.length > 0 ? '#ba684f' : 'none'} />
+              {wishlist.length > 0 && <i>{wishlist.length}</i>}
               <small>Wishlist</small>
             </Link>
             <Link href="/cart" aria-label="Cart" className="cart-link">
@@ -187,7 +187,7 @@ export default function SiteHeader() {
               className={`top-nav-tab ${isBogo ? 'active' : ''}`}
               aria-current={isBogo ? 'page' : undefined}
             >
-              <Sparkles size={16} />
+              <Tag size={16} />
               <span>BOGO Deals</span>
             </Link>
           </div>
@@ -280,7 +280,7 @@ export default function SiteHeader() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <div className="flex items-center gap-3">
-                  <Sparkles size={18} />
+                  <Tag size={18} />
                   <strong>BOGO Buy 1 Get 1</strong>
                 </div>
                 <ChevronRight size={16} />
@@ -319,7 +319,7 @@ export default function SiteHeader() {
                   <ShoppingBag size={16} /> Cart ({cartCount})
                 </Link>
                 <Link
-                  href="/account"
+                  href={user ? '/account' : '/login'}
                   className="button secondary flex-1"
                   onClick={() => setMobileMenuOpen(false)}
                 >

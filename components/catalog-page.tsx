@@ -46,6 +46,7 @@ export default function CatalogPage({
   const [query, setQuery] = useState('')
   const [sort, setSort] = useState('relevance')
   const [bogoOnly, setBogoOnly] = useState(isBogoOnlyDefault)
+  const [visibleCount, setVisibleCount] = useState(24)
   const { cart, wishlist, addToCart, changeQuantity, toggleWishlist, cartCount } = useCommerce()
 
   const pool = useMemo(() => {
@@ -137,8 +138,9 @@ export default function CatalogPage({
         </div>
 
         {pool.length ? (
-          <div className="catalog-grid">
-            {pool.map((p) => {
+          <>
+            <div className="catalog-grid">
+              {pool.slice(0, visibleCount).map((p) => {
               const qty = qtyFor(p.id)
               return (
                 <article className="catalog-card" key={p.id}>
@@ -163,7 +165,7 @@ export default function CatalogPage({
                     <small>
                       {p.brand} · {p.unit}
                     </small>
-                    <Link href={`/${p.slug}`} className="catalog-name">
+                    <Link href={`/${p.slug}`} prefetch={false} className="catalog-name">
                       {p.name}
                     </Link>
                     <div className="rating">
@@ -214,6 +216,18 @@ export default function CatalogPage({
               )
             })}
           </div>
+          {pool.length > visibleCount && (
+            <div className="flex justify-center mt-8">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((c) => c + 24)}
+                className="button secondary"
+              >
+                Load more products ({pool.length - visibleCount} remaining)
+              </button>
+            </div>
+          )}
+        </>
         ) : (
           <div className="empty-state">
             <h2>No products found</h2>

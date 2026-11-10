@@ -8,6 +8,9 @@ import ProductActions from '@/components/product-actions'
 import AccountView from '@/components/account-view'
 import { serviceCatalog, getServiceSlug } from '@/data/marketplaces'
 import Footer from '@/components/footer'
+import CartView from '@/components/cart-view'
+import CheckoutView from '@/components/checkout-view'
+import WishlistView from '@/components/wishlist-view'
 
 export default async function RoutePage({
   params,
@@ -99,9 +102,9 @@ export default async function RoutePage({
       <Footer />
     </>
   )
-  if (path === 'bogo') return <CatalogPage section="smart" />
+  if (path === 'bogo') return <CatalogPage section="shop" isBogoOnlyDefault={true} />
   if (path.startsWith('bogo/'))
-    return <CatalogPage section={path.split('/').at(-1) || 'smart'} />
+    return <CatalogPage section={path.split('/').at(-1) || 'smart'} isBogoOnlyDefault={true} />
   if (
     [
       'shop',
@@ -148,12 +151,13 @@ export default async function RoutePage({
   if (path==='login') return <AuthDemo/>
   if (path==='account') return <AccountView initialTab="bookings"/>
   if (path==='orders') return <AccountView initialTab="orders"/>
-  if (['cart','checkout'].includes(path)) { const title=path==='cart'?'Your cart':'Checkout'; return <><main className="route-page"><div className="route-inner"><Link href="/" className="back-link">← Back to home</Link><p className="eyebrow">TECHIESMART</p><h1>{title}</h1><p className="route-lead">A commerce-first experience for shopping together, discovering useful services and making savings visible.</p><div className="route-list"><article><h2>Explore this workspace</h2><p>{path==='cart'?'Your cart will show exact products, quantities and BOGO savings.':'TechieSmart connects everyday shopping, community offers and useful neighbourhood services.'}</p><Link href="/shop" className="button primary">{path==='cart'?'Continue shopping':'Browse products'}</Link></article></div></div></main><Footer/></>
-  }
+  if (path === 'cart') return <CartView />
+  if (path === 'checkout') return <CheckoutView />
+  if (path === 'wishlist') return <WishlistView />
   notFound()
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export function generateStaticParams() {
   const routes: { slug: string[] }[] = [
@@ -181,6 +185,7 @@ export function generateStaticParams() {
     { slug: ['orders'] },
     { slug: ['cart'] },
     { slug: ['checkout'] },
+    { slug: ['wishlist'] },
   ]
 
   // Category subroutes
