@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { products } from '@/data/products'
 import {
-  checkRateLimit,
+  distributedRateLimit,
+  getIdempotencyRecord,
+  setIdempotencyRecord,
+} from '@/lib/redis'
+import {
   isValidId,
   isValidPhone,
   isValidPincode,
@@ -28,12 +32,6 @@ interface OrderRequestBody {
   communityCode?: string
 }
 
-// In-memory idempotency cache (key -> { order, createdAt })
-const idempotencyStore = new Map<
-  string,
-  { order: Record<string, unknown>; createdAt: number }
->()
-
 const ALLOWED_PAYMENT_METHODS = new Set([
   'UPI (GPay / PhonePe)',
   'Credit / Debit Card',
@@ -41,19 +39,38 @@ const ALLOWED_PAYMENT_METHODS = new Set([
   'Net Banking',
 ])
 
+const productMap = new Map(products.map((p) => [p.id, p]))
+
 export async function POST(req: NextRequest) {
+  const startedAt = Date.now()
   const clientIp =
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
 
-  const rate = checkRateLimit(`orders:${clientIp}`, 15, 60_000)
-  if (!rate.allowed) {
-    logSecurityEvent('ORDER_RATE_LIMITED', { clientIp })
+  // 1. Distributed Per-IP Rate Limit (30 req/min) & Global Rate Limit (1,200 req/min)
+  const [ipRate, globalRate] = await Promise.all([
+    distributedRateLimit(`rl:orders:ip:${clientIp}`, 30, 60),
+    distributedRateLimit('rl:orders:global', 1200, 60),
+  ])
+
+  if (!ipRate.allowed || !globalRate.allowed) {
+    logSecurityEvent('ORDER_RATE_LIMITED', {
+      clientIp,
+      ipCount: ipRate.count,
+      globalCount: globalRate.count,
+    })
     return NextResponse.json(
       { error: 'Too many order requests. Please wait a moment and try again.' },
-      { status: 429 }
+      {
+        status: 429,
+        headers: {
+          'Retry-After': '60',
+          'X-RateLimit-Remaining': String(Math.min(ipRate.remaining, globalRate.remaining)),
+        },
+      }
     )
   }
 
+  // 2. Distributed Idempotency Check
   const idempotencyKey = req.headers.get('idempotency-key')?.trim()
   if (idempotencyKey) {
     if (!isValidId(idempotencyKey)) {
@@ -62,12 +79,20 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       )
     }
-    const cached = idempotencyStore.get(idempotencyKey)
-    if (cached && Date.now() - cached.createdAt < 10 * 60_000) {
-      return NextResponse.json(
-        { order: cached.order, deduplicated: true },
-        { status: 200 }
-      )
+    const cachedRaw = await getIdempotencyRecord(idempotencyKey)
+    if (cachedRaw) {
+      try {
+        const cachedOrder = JSON.parse(cachedRaw)
+        return NextResponse.json(
+          { order: cachedOrder, deduplicated: true },
+          {
+            status: 200,
+            headers: { 'X-Response-Time': `${Date.now() - startedAt}ms` },
+          }
+        )
+      } catch {
+        // Ignore corrupted cache entry and proceed
+      }
     }
   }
 
@@ -92,7 +117,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // Validate & sanitize address
+  // 3. Validate & sanitize delivery address
   const addr = body.address
   if (!addr || typeof addr !== 'object') {
     return NextResponse.json(
@@ -131,8 +156,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // Recompute prices, BOGO savings, and stock strictly from server catalog
-  const productMap = new Map(products.map((p) => [p.id, p]))
+  // 4. Recompute prices, BOGO savings, and stock strictly from server catalog
   let subtotal = 0
   let bogoSavings = 0
   const verifiedItems: Array<{
@@ -213,17 +237,25 @@ export async function POST(req: NextRequest) {
   }
 
   if (idempotencyKey) {
-    idempotencyStore.set(idempotencyKey, {
-      order: orderRecord,
-      createdAt: Date.now(),
-    })
+    await setIdempotencyRecord(idempotencyKey, JSON.stringify(orderRecord), 600)
   }
 
+  const durationMs = Date.now() - startedAt
   logSecurityEvent('ORDER_VERIFIED', {
     orderId: orderRecord.id,
     total: orderRecord.total,
     itemCount: verifiedItems.length,
+    durationMs,
   })
 
-  return NextResponse.json({ order: orderRecord }, { status: 201 })
+  return NextResponse.json(
+    { order: orderRecord },
+    {
+      status: 201,
+      headers: {
+        'X-Response-Time': `${durationMs}ms`,
+        'X-RateLimit-Remaining': String(Math.min(ipRate.remaining, globalRate.remaining)),
+      },
+    }
+  )
 }

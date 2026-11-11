@@ -2,8 +2,10 @@
 const nextConfig = {
   output: 'standalone',
   poweredByHeader: false,
+  compress: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 86400,
   },
   allowedDevOrigins: [
     'ais-dev-ibkr2nm6fjnah5k5zk2sua-803556551727.asia-southeast1.run.app',
