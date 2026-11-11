@@ -37,8 +37,11 @@ export default function CheckoutView() {
   const deliveryFee = subtotal >= 499 || subtotal === 0 ? 0 : 39
   const totalPayable = subtotal + deliveryFee
 
-  function handlePlaceOrder(e: React.FormEvent) {
+  const [submitting, setSubmitting] = useState(false)
+
+  async function handlePlaceOrder(e: React.FormEvent) {
     e.preventDefault()
+    if (submitting) return
     setError('')
 
     let chosenAddress = {
@@ -75,12 +78,43 @@ export default function CheckoutView() {
       return
     }
 
-    const order = placeOrder({
-      address: chosenAddress,
-      paymentMethod,
-      communityCode: communityCode.trim().toUpperCase() || undefined,
-    })
-    setPlacedOrder(order)
+    setSubmitting(true)
+    try {
+      const idempotencyKey = `ord_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Idempotency-Key': idempotencyKey,
+        },
+        body: JSON.stringify({
+          items: cart.map((c) => ({
+            productId: c.product.id,
+            quantity: c.quantity,
+          })),
+          address: chosenAddress,
+          paymentMethod,
+          communityCode: communityCode.trim().toUpperCase() || undefined,
+        }),
+      })
+
+      const data = await res.json()
+      if (!res.ok) {
+        setError(data?.error || 'Order validation failed. Please check your details.')
+        return
+      }
+
+      const order = placeOrder({
+        address: data.order?.address || chosenAddress,
+        paymentMethod,
+        communityCode: communityCode.trim().toUpperCase() || undefined,
+      })
+      setPlacedOrder(order)
+    } catch {
+      setError('Network error while validating your order. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (placedOrder) {
