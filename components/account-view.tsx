@@ -962,16 +962,16 @@ export default function AccountView({ initialTab = 'overview' }: { initialTab?: 
             {/* 6. MY BOOKINGS */}
             {section === 'bookings' && (
               <div className="space-y-4 text-xs">
-                <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                <div className="flex flex-wrap items-center gap-2 pb-1">
                   {['All', 'Confirmed', 'Assigned', 'In Progress', 'Completed', 'Cancelled'].map((st) => (
                     <button
                       key={st}
                       type="button"
                       onClick={() => setBookingFilter(st)}
-                      className={`px-3 py-1 rounded-full font-semibold whitespace-nowrap ${
+                      className={`inline-flex items-center justify-center px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
                         bookingFilter === st
-                          ? 'bg-[#173b32] !text-white'
-                          : 'bg-white text-[#65766e] border border-[#dfe4dc]'
+                          ? '!bg-[#173b32] !text-white !border !border-[#173b32] shadow-sm'
+                          : '!bg-white !text-[#173b32] !border !border-[#dfe4dc] hover:!bg-[#f6f5f0]'
                       }`}
                     >
                       {st}

@@ -3,7 +3,7 @@ const nextConfig = {
   output: 'standalone',
   poweredByHeader: false,
   images: {
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
   },
   allowedDevOrigins: [
     'ais-dev-ibkr2nm6fjnah5k5zk2sua-803556551727.asia-southeast1.run.app',

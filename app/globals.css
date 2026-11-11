@@ -6,7 +6,8 @@
 .top-nav-tabs-bar{background:#fff;border-top:1px solid #f0f3ed;border-bottom:1px solid var(--border);position:relative;box-shadow:0 2px 8px rgba(0,0,0,0.03)}
 .top-nav-tabs-container{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:8px 24px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .top-nav-tabs-container::-webkit-scrollbar{display:none}
-.top-nav-tab{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:9999px;font-size:13px;font-weight:700;color:#3b4e44;text-decoration:none;border:1px solid #dfe5dc;background:#fbfcf9;white-space:nowrap;transition:all .15s ease-in-out;flex-shrink:0}
+.top-nav-tab{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:9999px;font-size:13px;font-weight:700;color:#3b4e44;text-decoration:none;border:1px solid #dfe5dc;background:#fbfcf9;white-space:nowrap;transition:background-color .15s ease,color .15s ease,border-color .15s ease;flex-shrink:0}
+.how,.marketplace,.faq,.final-cta,footer{content-visibility:auto;contain-intrinsic-size:400px}
 .top-nav-tab:hover{background:#f0f4ec;color:#173b32;border-color:#cbd8c8}
 .top-nav-tab.active{background:#173b32;color:#fff;border-color:#173b32;box-shadow:0 2px 8px rgba(23,59,50,0.18)}
 .top-nav-tab.active svg{color:#fff}
