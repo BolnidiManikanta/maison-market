@@ -24,7 +24,7 @@ import { useCommerce } from '@/components/commerce-provider'
 export default function SiteHeader() {
   const pathname = usePathname()
   const router = useRouter()
-  const { cartCount, wishlist, user } = useCommerce()
+  const { cartCount, subtotal, wishlist, user } = useCommerce()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -329,6 +329,13 @@ export default function SiteHeader() {
             </div>
           </div>
         </div>
+      )}
+      {cartCount > 0 && pathname !== '/' && pathname !== '/cart' && pathname !== '/checkout' && (
+        <Link className="floating-cart" href="/cart">
+          <ShoppingBag size={17} />
+          <span>{cartCount} {cartCount === 1 ? 'item' : 'items'}</span>
+          <b>₹{subtotal.toLocaleString('en-IN')} · View Cart</b>
+        </Link>
       )}
     </>
   )

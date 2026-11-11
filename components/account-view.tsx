@@ -386,8 +386,8 @@ export default function AccountView({ initialTab = 'overview' }: { initialTab?: 
                     onClick={() => setSection(item.id)}
                     className={`flex items-center justify-between gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-colors ${
                       active
-                        ? 'bg-[#173b32] !text-white shadow-sm'
-                        : 'text-[#4d5e55] hover:bg-[#f6f5f0] hover:text-[#173b32]'
+                        ? '!bg-[#173b32] !text-white shadow-sm'
+                        : 'text-[#4d5e55] hover:!bg-[#f6f5f0] hover:text-[#173b32]'
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
