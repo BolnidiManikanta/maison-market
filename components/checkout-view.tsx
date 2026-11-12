@@ -34,7 +34,48 @@ export default function CheckoutView() {
     }
   }, [user])
 
-  const deliveryFee = subtotal >= 499 || subtotal === 0 ? 0 : 39
+  const [routeEstimate, setRouteEstimate] = useState<{
+    distanceKm: number
+    durationMinutes: number
+    deliveryFee: number
+    serviceable: boolean
+    storeName: string
+  } | null>(null)
+
+  useEffect(() => {
+    const saved = user?.addresses.find((a) => a.id === selectedAddressId) as
+      | { lat?: number; lng?: number }
+      | undefined
+    const lat = saved?.lat ?? 18.5913
+    const lng = saved?.lng ?? 73.7610
+    let cancelled = false
+
+    fetch('/api/maps/route', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lat, lng, subtotal }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && data && typeof data.distanceKm === 'number') {
+          setRouteEstimate({
+            distanceKm: data.distanceKm,
+            durationMinutes: data.durationMinutes,
+            deliveryFee: data.deliveryFee,
+            serviceable: data.serviceable,
+            storeName: data.storeLocation?.name || 'TechieSmart Hub',
+          })
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [selectedAddressId, user, subtotal])
+
+  const deliveryFee =
+    routeEstimate?.deliveryFee ?? (subtotal >= 499 || subtotal === 0 ? 0 : 39)
   const totalPayable = subtotal + deliveryFee
 
   const [submitting, setSubmitting] = useState(false)

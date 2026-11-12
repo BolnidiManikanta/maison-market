@@ -44,7 +44,7 @@ export default function LocationMapPicker({
   async function reverseGeocode(lat: number, lng: number) {
     try {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
       )
       const data = await res.json()
       const addr = data.address || {}
@@ -157,15 +157,31 @@ export default function LocationMapPicker({
         setStatusMsg('Live GPS location detected!')
         movePin(pos.coords.latitude, pos.coords.longitude)
       },
-      (err) => {
+      async (err) => {
+        if (err.code === 1) {
+          try {
+            const res = await fetch('https://ipapi.co/json/')
+            const data = await res.json()
+            if (typeof data.latitude === 'number' && typeof data.longitude === 'number') {
+              movePin(data.latitude, data.longitude)
+              setLocating(false)
+              setStatusMsg(
+                'Browser GPS permission is blocked — centered on your approximate network location. Drag the pin or search for your exact street.'
+              )
+              return
+            }
+          } catch {
+            // Fall through to standard message
+          }
+        }
         setLocating(false)
         setStatusMsg(
           err.code === 1
-            ? 'Location permission denied. You can search or drag the pin on the map.'
+            ? 'Location permission denied. Allow Location in your browser address bar, or search/drag the pin on the map.'
             : 'Unable to detect GPS location. Try searching your address.'
         )
       },
-      { enableHighAccuracy: true, timeout: 10000 }
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     )
   }
 
